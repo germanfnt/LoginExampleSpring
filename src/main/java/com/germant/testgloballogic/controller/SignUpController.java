@@ -5,12 +5,10 @@ import com.germant.testgloballogic.mapper.RegisterMapper;
 import com.germant.testgloballogic.mapper.UserMapper;
 import com.germant.testgloballogic.model.UserEntity;
 import com.germant.testgloballogic.model.request.UserRequest;
-import com.germant.testgloballogic.model.response.ErrorResponse;
 import com.germant.testgloballogic.model.response.RegisterResponse;
 import com.germant.testgloballogic.security.jwt.JWTGenerator;
 import com.germant.testgloballogic.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

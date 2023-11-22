@@ -1,22 +1,18 @@
 package com.germant.testgloballogic.security.jwt;
 
 
-import com.germant.testgloballogic.model.UserEntity;
-import com.germant.testgloballogic.service.UserDetailServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -30,14 +26,13 @@ public class JWTGenerator {
 
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     public String getUserNameFromJwtToken(String token) {
-        String name = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
-        return name;
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken, UserDetails userDetails) {
         String username = getUserNameFromJwtToken(authToken);
         if(username.equals(userDetails.getUsername()) && expiredToken(authToken)) {
-
+            return true;
         }
 
         try {
@@ -73,14 +68,13 @@ public class JWTGenerator {
     }
 
     public String generateToken(Authentication authentication) {
-        String token = Jwts.builder()
+
+        return Jwts.builder()
                 .setSubject(authentication.getName())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key,SignatureAlgorithm.HS256)
                 .compact();
-
-        return token;
     }
 
 }

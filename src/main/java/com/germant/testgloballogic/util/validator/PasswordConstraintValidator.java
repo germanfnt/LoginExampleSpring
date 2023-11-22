@@ -18,11 +18,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<PassVali
     public boolean isValid(String value, final ConstraintValidatorContext context) {
 
         Matcher matcher = pattern.matcher(value);
-        if (matcher.matches() == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches() == true;
 
     }
 }
